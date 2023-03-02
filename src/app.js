@@ -56,6 +56,10 @@ app.put('/stress/:elemento/tempostress/:tempoStress/intervalo/:intervalo/ciclos/
 app.use('/api/produto', product);
 
 var developer_db_url = 'mongodb://mongouser:mongopwd@localhost:27017/admin';
+
+// no caso de rodar tudo em container usar
+// var developer_db_url = 'mongodb://mongouser:mongopwd@mongodb:27017/admin';
+// mogodb é o nome do container
 var mongoUrl = process.env.MONGODB_URI || developer_db_url;
 
 mongoose.Promise = global.Promise;
