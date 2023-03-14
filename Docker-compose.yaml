@@ -1,0 +1,37 @@
+version:'3'
+
+networks:
+  api-network:
+    driver: bridge
+
+volumes:
+  mongo-vol:
+
+services:
+  mongodb:
+    image: mongo
+    volumes:
+      - "mongo-vol:/data/db"
+  networks:
+    - "api-network"
+  environment:
+    MONGO_INIT_ROOT_USERNAME: mongouser
+    MONGO_INIT_ROOT_PASSWORD: mongoPwd
+  ports:
+    - 27017: 27017
+  
+  api:
+    image: rafysanchez/api-produto:v1
+    build:
+    context: src/
+    dockerfile: Dockerfile
+    environment:
+      MONGO_URI: "mongodb://localhost:27017"  
+    networks:
+      - "api-network"
+    ports:
+      - 8080:8080
+    depends_on:
+      - "mongodb"
+
+          
